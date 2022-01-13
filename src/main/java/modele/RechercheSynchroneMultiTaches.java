@@ -16,7 +16,7 @@ import infrastructure.jaxrs.Outils;
 public class RechercheSynchroneMultiTaches extends RechercheSynchroneAbstraite implements AlgorithmeRecherche {
 
 	private NomAlgorithme nomAlgorithme;
-	private ExecutorService exec ;
+	private ExecutorService exec;
 
 	public RechercheSynchroneMultiTaches(String nom) {
 		this.nomAlgorithme = new ImplemNomAlgorithme(nom);
@@ -30,7 +30,7 @@ public class RechercheSynchroneMultiTaches extends RechercheSynchroneAbstraite i
 		Outils.afficherInfoTache(nom().getNom());
 
 		CountDownLatch countdown = new CountDownLatch(bibliotheques.size());
-		AtomicReference<Optional<HyperLien<Livre>>> ret= new AtomicReference<>(Optional.empty());
+		AtomicReference<Optional<HyperLien<Livre>>> ret = new AtomicReference<>(Optional.empty());
 
 		for (HyperLien<Bibliotheque> lien : bibliotheques) {
 

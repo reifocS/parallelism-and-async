@@ -27,48 +27,43 @@ public class ImplemPortail implements Portail {
 	private final List<HyperLien<Bibliotheque>> bibliotheques;
 	private final ConcurrentMap<NomAlgorithme, AlgorithmeRecherche> tableAlgos;
 	private AlgorithmeRecherche algoRecherche;
-	
+
 	public ImplemPortail() {
 		System.out.println("Déploiement de " + this + " : " + this.getClass());
 		this.client = Orchestrateur.clientJAXRS();
 		this.bibliotheques = Initialisation.bibliotheques();
 		this.tableAlgos = new ConcurrentHashMap<>();
-		this.algoRecherche = new RechercheSynchroneSequentielle("recherche sync seq");
-		AlgorithmeRecherche algo = this.algoRecherche;
+		this.algoRecherche = new RechercheSynchroneStreamRx("recherche sync stream rx");
+		AlgorithmeRecherche algo = new RechercheSynchroneSequentielle("recherche sync seq");
 		NomAlgorithme nom = this.algoRecherche.nom();
 		tableAlgos.put(nom, algo);
 		algo = new RechercheSynchroneMultiTaches("recherche sync multi");
-		nom = algo.nom();
-		tableAlgos.put(nom, algo);
-
-		/*
-		 		new RechercheSynchroneSequentielle("recherche sync seq");
-		
-		AlgorithmeRecherche algo = this.algoRecherche;
-		NomAlgorithme nom = this.algoRecherche.nom();
-		tableAlgos.put(nom, algo);
-		algo = new RechercheSynchroneMultiTaches("recherche sync multi");
-		nom = algo.nom();
-		tableAlgos.put(nom, algo);
-		algo = new RechercheSynchroneStreamParallele("recherche sync stream 8");
 		nom = algo.nom();
 		tableAlgos.put(nom, algo);
 		algo = new RechercheSynchroneStreamRx("recherche sync stream rx");
 		nom = algo.nom();
 		tableAlgos.put(nom, algo);
-		algo = new RechercheAsynchroneSequentielle("recherche async seq");
-		nom = algo.nom();
-		tableAlgos.put(nom, algo);
-		algo = new RechercheAsynchroneMultiTaches("recherche async multi");
-		nom = algo.nom();
-		tableAlgos.put(nom, algo);
-		algo = new RechercheAsynchroneStreamParallele("recherche async stream 8");
-		nom = algo.nom();
-		tableAlgos.put(nom, algo);
-		algo = new RechercheAsynchroneStreamRx("recherche async stream rx");
-		nom = algo.nom();
-		tableAlgos.put(nom, algo);
-		*/
+
+		/*
+		 * new RechercheSynchroneSequentielle("recherche sync seq");
+		 * 
+		 * AlgorithmeRecherche algo = this.algoRecherche; NomAlgorithme nom =
+		 * this.algoRecherche.nom(); tableAlgos.put(nom, algo); algo = new
+		 * RechercheSynchroneMultiTaches("recherche sync multi"); nom = algo.nom();
+		 * tableAlgos.put(nom, algo); algo = new
+		 * RechercheSynchroneStreamParallele("recherche sync stream 8"); nom =
+		 * algo.nom(); tableAlgos.put(nom, algo); algo = new
+		 * RechercheSynchroneStreamRx("recherche sync stream rx"); nom = algo.nom();
+		 * tableAlgos.put(nom, algo); algo = new
+		 * RechercheAsynchroneSequentielle("recherche async seq"); nom = algo.nom();
+		 * tableAlgos.put(nom, algo); algo = new
+		 * RechercheAsynchroneMultiTaches("recherche async multi"); nom = algo.nom();
+		 * tableAlgos.put(nom, algo); algo = new
+		 * RechercheAsynchroneStreamParallele("recherche async stream 8"); nom =
+		 * algo.nom(); tableAlgos.put(nom, algo); algo = new
+		 * RechercheAsynchroneStreamRx("recherche async stream rx"); nom = algo.nom();
+		 * tableAlgos.put(nom, algo);
+		 */
 	}
 
 	@Override
@@ -83,7 +78,7 @@ public class ImplemPortail implements Portail {
 	@Override
 	public Future<Optional<HyperLien<Livre>>> chercherAsynchrone(Livre l, AsyncResponse ar) {
 		ImplementationAppelsAsynchrones.rechercheAsynchroneBibliotheque(this, l, ar);
-		return null; 	// Le résultat n'importe pas mais permet de typer la fonction 
+		return null; // Le résultat n'importe pas mais permet de typer la fonction
 		// côté serveur de la même manière que côté client.
 	}
 
