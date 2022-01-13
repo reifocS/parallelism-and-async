@@ -50,7 +50,8 @@ public class ImplemPortail implements Portail {
 		nom = algo.nom();
 		tableAlgos.put(nom, algo);
 		algo = new RechercheAsynchroneStreamRx("recherche async stream rx");
-		nom = algo.nom(); 
+		nom = algo.nom();
+		tableAlgos.put(nom, algo);
 		algo = new RechercheAsynchroneStreamParallele("recherche async stream 8");
 		nom = algo.nom();
 		tableAlgos.put(nom, algo);

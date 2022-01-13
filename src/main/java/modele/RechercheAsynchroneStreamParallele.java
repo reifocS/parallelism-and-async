@@ -18,7 +18,7 @@ public class RechercheAsynchroneStreamParallele extends RechercheAsynchroneAbstr
 	public Optional<HyperLien<Livre>> chercher(Livre livre, List<HyperLien<Bibliotheque>> bibliotheques,
 			Client client) {
 		return bibliotheques.parallelStream().map((hyperlien) -> rechercheAsync(hyperlien, livre, client))
-				.map(Outils::remplirPromesse).filter((x) -> x.isEmpty()).findAny().orElse(Optional.empty());
+				.map(Outils::remplirPromesse).filter((x) -> x.isPresent()).findAny().orElse(Optional.empty());
 	}
 
 	@Override
