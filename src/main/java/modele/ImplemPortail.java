@@ -33,7 +33,14 @@ public class ImplemPortail implements Portail {
 		this.client = Orchestrateur.clientJAXRS();
 		this.bibliotheques = Initialisation.bibliotheques();
 		this.tableAlgos = new ConcurrentHashMap<>();
-		this.algoRecherche = null;
+		this.algoRecherche = new RechercheSynchroneSequentielle("recherche sync seq");
+		AlgorithmeRecherche algo = this.algoRecherche;
+		NomAlgorithme nom = this.algoRecherche.nom();
+		tableAlgos.put(nom, algo);
+		algo = new RechercheSynchroneMultiTaches("recherche sync multi");
+		nom = algo.nom();
+		tableAlgos.put(nom, algo);
+
 		/*
 		 		new RechercheSynchroneSequentielle("recherche sync seq");
 		
