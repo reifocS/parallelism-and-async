@@ -51,6 +51,8 @@ public class ImplemPortail implements Portail {
 		tableAlgos.put(nom, algo);
 		algo = new RechercheAsynchroneStreamRx("recherche async stream rx");
 		nom = algo.nom(); 
+		algo = new RechercheAsynchroneStreamParallele("recherche async stream 8");
+		nom = algo.nom();
 		tableAlgos.put(nom, algo);
 		/*
 		 * new RechercheSynchroneSequentielle("recherche sync seq");
@@ -59,16 +61,12 @@ public class ImplemPortail implements Portail {
 		 * this.algoRecherche.nom(); tableAlgos.put(nom, algo); algo = new
 		 * RechercheSynchroneMultiTaches("recherche sync multi"); nom = algo.nom();
 		 * tableAlgos.put(nom, algo); algo = new
-		 * RechercheSynchroneStreamParallele("recherche sync stream 8"); nom =
-		 * algo.nom(); tableAlgos.put(nom, algo); algo = new
 		 * RechercheSynchroneStreamRx("recherche sync stream rx"); nom = algo.nom();
 		 * tableAlgos.put(nom, algo); algo = new
 		 * RechercheAsynchroneSequentielle("recherche async seq"); nom = algo.nom();
 		 * tableAlgos.put(nom, algo); algo = new
 		 * RechercheAsynchroneMultiTaches("recherche async multi"); nom = algo.nom();
 		 * tableAlgos.put(nom, algo); algo = new
-		 * RechercheAsynchroneStreamParallele("recherche async stream 8"); nom =
-		 * algo.nom(); tableAlgos.put(nom, algo); algo = new
 		 * RechercheAsynchroneStreamRx("recherche async stream rx"); nom = algo.nom();
 		 * tableAlgos.put(nom, algo);
 		 */
