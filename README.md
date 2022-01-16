@@ -26,6 +26,7 @@ Le modèle Objet, fourni, contient les interfaces principales suivantes, pour un
 - **Livre**, décrivant le type de données représentant les livres des bibliothèques
 - **IdentifiantLivre**, décrivant le type de données permettant d'identifier les livres
 - **AlgorithmeRecherche** et **NomAlgorithme** décrivant un algorithme de recherche et son nom, utilisé pour l'administration
+
 ## Résultats
 
 ### Couche services - JAX-RS
@@ -108,4 +109,41 @@ Le modèle Objet, fourni, contient les interfaces principales suivantes, pour un
 ```
 
 ### Couche services - JAX-RS
+
+
+### Dimension temporelle
+
+Mesures réalisées à la suite sur un ordinateur à 2 coeurs.
+
+| Path                                          | Method | Status | Size   | Time (ms) |
+| --------------------------------------------- | ------ | ------ | ------ | --------- |
+| http://localhost:8080/portail/catalogue       | GET    | 200    | 6.2 kB | 393       |
+| http://localhost:8090/bib0/bibliotheque/0     | GET    | 200    | 166 B  | 351       |
+| http://localhost:8080/portail/admin/recherche | PUT    | 204    | 102 B  | 14        |
+| http://localhost:8080/portail/                | PUT    | 200    | 269 B  | 7570      |
+| http://localhost:8080/portail/async           | PUT    | 200    | 269 B  | 7570      |
+| http://localhost:8080/portail/admin/recherche | PUT    | 204    | 102 B  | 17        |
+| http://localhost:8080/portail/                | PUT    | 200    | 269 B  | 1600      |
+| http://localhost:8080/portail/async           | PUT    | 200    | 269 B  | 16400     |
+| http://localhost:8080/portail/admin/recherche | PUT    | 204    | 102 B  | 18        |
+| http://localhost:8080/portail/                | PUT    | 200    | 269 B  | 241       |
+| http://localhost:8080/portail/async           | PUT    | 200    | 269 B  | 212       |
+| http://localhost:8080/portail/admin/recherche | PUT    | 204    | 102 B  | 266       |
+| http://localhost:8080/portail/                | PUT    | 200    | 269 B  | 200       |
+| http://localhost:8080/portail/async           | PUT    | 200    | 269 B  | 399       |
+| http://localhost:8080/portail/admin/recherche | PUT    | 204    | 102 B  | 10        |
+| http://localhost:8080/portail/                | PUT    | 200    | 269 B  | 170       |
+| http://localhost:8080/portail/async           | PUT    | 200    | 269 B  | 560       |
+| http://localhost:8080/portail/admin/recherche | PUT    | 204    | 102 B  | 200       |
+| http://localhost:8080/portail/                | PUT    | 200    | 269 B  | 1520      |
+| http://localhost:8080/portail/async           | PUT    | 200    | 269 B  | 1640      |
+| http://localhost:8080/portail/admin/recherche | PUT    | 204    | 102 B  | 11        |
+| http://localhost:8080/portail/                | PUT    | 200    | 269 B  | 1540      |
+| http://localhost:8080/portail/async           | PUT    | 200    | 269 B  | 1520      |
+| http://localhost:8080/portail/admin/recherche | PUT    | 204    | 102 B  | 31        |
+| http://localhost:8080/portail/                | PUT    | 200    | 269 B  | 1550      |
+| http://localhost:8080/portail/async           | PUT    | 200    | 269 B  | 1550      |
+
+
+
 
