@@ -122,6 +122,30 @@ void changerAlgorithmeRecherche(NomAlgorithme algo);
 
 *En étudiant les interfaces **NomAlgorithme** et **Livre**, donner le schéma et un exemple de données XML pour un nom d'algorithme et un livre. Répondre dans le **readme**.*
 
+#### NomAlgorithme
+
+##### Schéma
+
+```
+```
+
+##### Exemple
+
+```
+```
+
+#### Livre
+
+##### Schéma
+
+```
+```
+
+##### Exemple
+
+```
+```
+
 ### Dimension temporelle
 
 Mesures réalisées à la suite sur un ordinateur à 2 coeurs.
