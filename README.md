@@ -2,6 +2,10 @@
 
 TP3 - Recherche efficace
 
+## Auteurs
+
+Escoffier Vincent & Jallais Adrien
+
 ## Introduction 
 
 Le but du TP est de proposer plusieurs implémentations des méthodes de recherche, en recourant au parallélisme et à la communication asynchrone, et de les comparer.
@@ -31,85 +35,92 @@ Le modèle Objet, fourni, contient les interfaces principales suivantes, pour un
 
 ### Couche services - JAX-RS
 
-```
-- Repertoire {
+*En étudiant le code des interfaces **Bibliotheque** et **Portail** (et de leurs interfaces parentes) ainsi que celui de leurs implémentations, déterminer l'ensemble des requêtes **http** acceptées par ces services. On supposera que la bibliothèque est déployée à l'adresse **BIBLIO** et le portail à l'adresse **PORTAIL**. Placer votre réponse dans un fichier **readme**.*
 
-	@PUT
-	@Produces(TYPE_MEDIA)
-	@Consumes(TYPE_MEDIA)
-	@ReponsesPUTOption
-	// Requête (méthode http + url) : 
-	// Corps : 
-	// Réponses (à spécifier par code) :
-	// - code : 
-	Optional<HyperLien<Livre>> chercher(Livre l);
-
-
-	@PUT
-	@ReponsesPUTOption
-	@Path(JAXRS.SOUSCHEMIN_ASYNC)
-	@Consumes(JAXRS.TYPE_MEDIA)
-	@Produces(JAXRS.TYPE_MEDIA)
-	// Requête (méthode http + url) : 
-	// Corps : 
-	// Réponses (à spécifier par code) :
-	// - code : 
-	Future<Optional<HyperLien<Livre>>> chercherAsynchrone(Livre l, @Suspended final AsyncResponse ar);
-
-	@GET
-	@Path(SOUSCHEMIN_CATALOGUE)
-	@Produces(TYPE_MEDIA)
-	// Requête (méthode http + url) : 
-	// Corps : 
-	// Réponses (à spécifier par code) :
-	// - code : 
-	HyperLiens<Livre> repertorier();
-
-- Archive 
-	@Path("{id}")
-	@ReponsesGETNullEn404
-	// Adresse de la sous-ressource : 
-	// Requête sur la sous-ressource (méthode http + url) : 
-	// Corps : 
-	// Réponses (à spécifier par code) :
-	// - code : 
-	Livre sousRessource(@PathParam("id") IdentifiantLivre id) ;
-
-	@Path("{id}")
-	@GET 
-	@Produces(JAXRS.TYPE_MEDIA)
-	@ReponsesGETNullEn404
-	// Requête (méthode http + url) : 
-	// Corps : 
-	// Réponses (à spécifier par code) :
-	// - code : 
-	Livre getRepresentation(@PathParam("id") IdentifiantLivre id);
-
-	@POST
-	@ReponsesPOSTEnCreated
-	@Consumes(JAXRS.TYPE_MEDIA)
-	@Produces(JAXRS.TYPE_MEDIA)
-	// Requête (méthode http + url) : 
-	// Corps : 
-	// Réponses (à spécifier par code) :
-	// - code : 
-	HyperLien<Livre> ajouter(Livre l);
-}
-
-- AdminAlgo
-	@PUT
-	@Path(JAXRS.SOUSCHEMIN_ALGO_RECHERCHE)
-	@Consumes(JAXRS.TYPE_MEDIA)
-	// Requête (méthode http + url) : 
-	// Corps : 
-	// Réponses (à spécifier par code) :
-	// - code : 
-	void changerAlgorithmeRecherche(NomAlgorithme algo);
+#### Repertoire
 
 ```
+@PUT
+@Produces(TYPE_MEDIA)
+@Consumes(TYPE_MEDIA)
+@ReponsesPUTOption
+// Requête (méthode http + url) : 
+// Corps : 
+// Réponses (à spécifier par code) :
+// - code : 
+Optional<HyperLien<Livre>> chercher(Livre l);
 
-### Couche services - JAX-RS
 
+@PUT
+@ReponsesPUTOption
+@Path(JAXRS.SOUSCHEMIN_ASYNC)
+@Consumes(JAXRS.TYPE_MEDIA)
+@Produces(JAXRS.TYPE_MEDIA)
+// Requête (méthode http + url) : 
+// Corps : 
+// Réponses (à spécifier par code) :
+// - code : 
+Future<Optional<HyperLien<Livre>>> chercherAsynchrone(Livre l, @Suspended final AsyncResponse ar);
+
+@GET
+@Path(SOUSCHEMIN_CATALOGUE)
+@Produces(TYPE_MEDIA)
+// Requête (méthode http + url) : 
+// Corps : 
+// Réponses (à spécifier par code) :
+// - code : 
+HyperLiens<Livre> repertorier();
+```
+
+#### Archive 
+
+```
+@Path("{id}")
+@ReponsesGETNullEn404
+// Adresse de la sous-ressource : 
+// Requête sur la sous-ressource (méthode http + url) : 
+// Corps : 
+// Réponses (à spécifier par code) :
+// - code : 
+Livre sousRessource(@PathParam("id") IdentifiantLivre id) ;
+
+@Path("{id}")
+@GET 
+@Produces(JAXRS.TYPE_MEDIA)
+@ReponsesGETNullEn404
+// Requête (méthode http + url) : 
+// Corps : 
+// Réponses (à spécifier par code) :
+// - code : 
+Livre getRepresentation(@PathParam("id") IdentifiantLivre id);
+
+@POST
+@ReponsesPOSTEnCreated
+@Consumes(JAXRS.TYPE_MEDIA)
+@Produces(JAXRS.TYPE_MEDIA)
+// Requête (méthode http + url) : 
+// Corps : 
+// Réponses (à spécifier par code) :
+// - code : 
+HyperLien<Livre> ajouter(Livre l);
+```
+
+#### AdminAlgo
+
+```
+@PUT
+@Path(JAXRS.SOUSCHEMIN_ALGO_RECHERCHE)
+@Consumes(JAXRS.TYPE_MEDIA)
+// Requête (méthode http + url) : 
+// Corps : 
+// Réponses (à spécifier par code) :
+// - code : 
+void changerAlgorithmeRecherche(NomAlgorithme algo);
+```
+
+### Couche services - JAX-XB
+
+*En étudiant les interfaces **NomAlgorithme** et **Livre**, donner le schéma et un exemple de données XML pour un nom d'algorithme et un livre. Répondre dans le **readme**.*
 
 ### Dimension temporelle
 
