@@ -21,7 +21,7 @@ public class RechercheSynchroneStreamRx extends RechercheSynchroneAbstraite impl
 	public Optional<HyperLien<Livre>> chercher(Livre l, List<HyperLien<Bibliotheque>> bibliotheques, Client client) {
 		return Observable.fromIterable(bibliotheques)
 				.flatMap(h -> Observable.fromCallable(() -> rechercheSync(h, l, client))).subscribeOn(Schedulers.io())
-				.filter((x) -> x.isEmpty()).blockingFirst(Optional.empty());
+				.filter((x) -> x.isPresent()).blockingFirst(Optional.empty());
 	}
 
 	@Override

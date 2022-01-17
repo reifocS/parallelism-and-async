@@ -25,7 +25,7 @@ public class RechercheAsynchroneStreamRx extends RechercheAsynchroneAbstraite {
 
 		return Observable.fromIterable(bibliotheques)
 				.flatMap(h -> Observable.fromFuture(this.rechercheAsync(h, l, client))).subscribeOn(Schedulers.io())
-				.filter((x) -> x.isEmpty()).blockingFirst(Optional.empty());
+				.filter((x) -> x.isPresent()).blockingFirst(Optional.empty());
 	}
 
 	@Override
