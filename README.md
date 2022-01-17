@@ -126,24 +126,51 @@ void changerAlgorithmeRecherche(NomAlgorithme algo);
 
 ##### Schéma
 
-```
+```xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="livre" type="Livre"/>
+
+  <xs:complexType name="Livre">
+    <xs:sequence>
+      <xs:element name="titre" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
 ```
 
 ##### Exemple
 
-```
+```xml
+<algo>
+ <nom>NomAlgorithme</nom>
+</algo>
 ```
 
 #### Livre
 
 ##### Schéma
 
-```
+```xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="algo" type="NomAlgorithme"/>
+
+  <xs:complexType name="NomAlgorithme">
+    <xs:sequence/>
+    <xs:attribute name="nom" type="xs:string"/>
+  </xs:complexType>
+</xs:schema>
 ```
 
 ##### Exemple
 
-```
+```xml
+<livre>
+ <titre>Livre</titre>
+</livre>
 ```
 
 ### Dimension temporelle
@@ -178,7 +205,3 @@ Mesures réalisées à la suite sur un ordinateur à 2 coeurs.
 | http://localhost:8080/portail/admin/recherche | PUT    | 204    | 102 B  | 31        |
 | http://localhost:8080/portail/                | PUT    | 200    | 269 B  | 1550      |
 | http://localhost:8080/portail/async           | PUT    | 200    | 269 B  | 1550      |
-
-
-
-
