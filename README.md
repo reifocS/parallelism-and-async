@@ -2,6 +2,10 @@
 
 TP3 - Recherche efficace
 
+## Auteurs
+
+Escoffier Vincent & Jallais Adrien
+
 ## Introduction 
 
 Le but du TP est de proposer plusieurs implémentations des méthodes de recherche, en recourant au parallélisme et à la communication asynchrone, et de les comparer.
@@ -26,86 +30,178 @@ Le modèle Objet, fourni, contient les interfaces principales suivantes, pour un
 - **Livre**, décrivant le type de données représentant les livres des bibliothèques
 - **IdentifiantLivre**, décrivant le type de données permettant d'identifier les livres
 - **AlgorithmeRecherche** et **NomAlgorithme** décrivant un algorithme de recherche et son nom, utilisé pour l'administration
+
 ## Résultats
 
 ### Couche services - JAX-RS
 
-```
-- Repertoire {
+*En étudiant le code des interfaces **Bibliotheque** et **Portail** (et de leurs interfaces parentes) ainsi que celui de leurs implémentations, déterminer l'ensemble des requêtes **http** acceptées par ces services. On supposera que la bibliothèque est déployée à l'adresse **BIBLIO** et le portail à l'adresse **PORTAIL**. Placer votre réponse dans un fichier **readme**.*
 
-	@PUT
-	@Produces(TYPE_MEDIA)
-	@Consumes(TYPE_MEDIA)
-	@ReponsesPUTOption
-	// Requête (méthode http + url) : 
-	// Corps : 
-	// Réponses (à spécifier par code) :
-	// - code : 
-	Optional<HyperLien<Livre>> chercher(Livre l);
-
-
-	@PUT
-	@ReponsesPUTOption
-	@Path(JAXRS.SOUSCHEMIN_ASYNC)
-	@Consumes(JAXRS.TYPE_MEDIA)
-	@Produces(JAXRS.TYPE_MEDIA)
-	// Requête (méthode http + url) : 
-	// Corps : 
-	// Réponses (à spécifier par code) :
-	// - code : 
-	Future<Optional<HyperLien<Livre>>> chercherAsynchrone(Livre l, @Suspended final AsyncResponse ar);
-
-	@GET
-	@Path(SOUSCHEMIN_CATALOGUE)
-	@Produces(TYPE_MEDIA)
-	// Requête (méthode http + url) : 
-	// Corps : 
-	// Réponses (à spécifier par code) :
-	// - code : 
-	HyperLiens<Livre> repertorier();
-
-- Archive 
-	@Path("{id}")
-	@ReponsesGETNullEn404
-	// Adresse de la sous-ressource : 
-	// Requête sur la sous-ressource (méthode http + url) : 
-	// Corps : 
-	// Réponses (à spécifier par code) :
-	// - code : 
-	Livre sousRessource(@PathParam("id") IdentifiantLivre id) ;
-
-	@Path("{id}")
-	@GET 
-	@Produces(JAXRS.TYPE_MEDIA)
-	@ReponsesGETNullEn404
-	// Requête (méthode http + url) : 
-	// Corps : 
-	// Réponses (à spécifier par code) :
-	// - code : 
-	Livre getRepresentation(@PathParam("id") IdentifiantLivre id);
-
-	@POST
-	@ReponsesPOSTEnCreated
-	@Consumes(JAXRS.TYPE_MEDIA)
-	@Produces(JAXRS.TYPE_MEDIA)
-	// Requête (méthode http + url) : 
-	// Corps : 
-	// Réponses (à spécifier par code) :
-	// - code : 
-	HyperLien<Livre> ajouter(Livre l);
-}
-
-- AdminAlgo
-	@PUT
-	@Path(JAXRS.SOUSCHEMIN_ALGO_RECHERCHE)
-	@Consumes(JAXRS.TYPE_MEDIA)
-	// Requête (méthode http + url) : 
-	// Corps : 
-	// Réponses (à spécifier par code) :
-	// - code : 
-	void changerAlgorithmeRecherche(NomAlgorithme algo);
+#### Repertoire
 
 ```
+@PUT
+@Produces(TYPE_MEDIA)
+@Consumes(TYPE_MEDIA)
+@ReponsesPUTOption
+// Requête (méthode http + url) : 
+// Corps : 
+// Réponses (à spécifier par code) :
+// - code : 
+Optional<HyperLien<Livre>> chercher(Livre l);
 
-### Couche services - JAX-RS
 
+@PUT
+@ReponsesPUTOption
+@Path(JAXRS.SOUSCHEMIN_ASYNC)
+@Consumes(JAXRS.TYPE_MEDIA)
+@Produces(JAXRS.TYPE_MEDIA)
+// Requête (méthode http + url) : 
+// Corps : 
+// Réponses (à spécifier par code) :
+// - code : 
+Future<Optional<HyperLien<Livre>>> chercherAsynchrone(Livre l, @Suspended final AsyncResponse ar);
+
+@GET
+@Path(SOUSCHEMIN_CATALOGUE)
+@Produces(TYPE_MEDIA)
+// Requête (méthode http + url) : 
+// Corps : 
+// Réponses (à spécifier par code) :
+// - code : 
+HyperLiens<Livre> repertorier();
+```
+
+#### Archive 
+
+```
+@Path("{id}")
+@ReponsesGETNullEn404
+// Adresse de la sous-ressource : 
+// Requête sur la sous-ressource (méthode http + url) : 
+// Corps : 
+// Réponses (à spécifier par code) :
+// - code : 
+Livre sousRessource(@PathParam("id") IdentifiantLivre id) ;
+
+@Path("{id}")
+@GET 
+@Produces(JAXRS.TYPE_MEDIA)
+@ReponsesGETNullEn404
+// Requête (méthode http + url) : 
+// Corps : 
+// Réponses (à spécifier par code) :
+// - code : 
+Livre getRepresentation(@PathParam("id") IdentifiantLivre id);
+
+@POST
+@ReponsesPOSTEnCreated
+@Consumes(JAXRS.TYPE_MEDIA)
+@Produces(JAXRS.TYPE_MEDIA)
+// Requête (méthode http + url) : 
+// Corps : 
+// Réponses (à spécifier par code) :
+// - code : 
+HyperLien<Livre> ajouter(Livre l);
+```
+
+#### AdminAlgo
+
+```
+@PUT
+@Path(JAXRS.SOUSCHEMIN_ALGO_RECHERCHE)
+@Consumes(JAXRS.TYPE_MEDIA)
+// Requête (méthode http + url) : 
+// Corps : 
+// Réponses (à spécifier par code) :
+// - code : 
+void changerAlgorithmeRecherche(NomAlgorithme algo);
+```
+
+### Couche services - JAX-XB
+
+*En étudiant les interfaces **NomAlgorithme** et **Livre**, donner le schéma et un exemple de données XML pour un nom d'algorithme et un livre. Répondre dans le **readme**.*
+
+#### NomAlgorithme
+
+##### Schéma
+
+```xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="livre" type="Livre"/>
+
+  <xs:complexType name="Livre">
+    <xs:sequence>
+      <xs:element name="titre" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+```
+
+##### Exemple
+
+```xml
+<algo>
+ <nom>NomAlgorithme</nom>
+</algo>
+```
+
+#### Livre
+
+##### Schéma
+
+```xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="algo" type="NomAlgorithme"/>
+
+  <xs:complexType name="NomAlgorithme">
+    <xs:sequence/>
+    <xs:attribute name="nom" type="xs:string"/>
+  </xs:complexType>
+</xs:schema>
+```
+
+##### Exemple
+
+```xml
+<livre>
+ <titre>Livre</titre>
+</livre>
+```
+
+### Dimension temporelle
+
+Mesures réalisées à la suite sur un ordinateur à 2 coeurs.
+
+| Path                                          | Method | Status | Size   | Time (ms) |
+| --------------------------------------------- | ------ | ------ | ------ | --------- |
+| http://localhost:8080/portail/catalogue       | GET    | 200    | 6.2 kB | 393       |
+| http://localhost:8090/bib0/bibliotheque/0     | GET    | 200    | 166 B  | 351       |
+| http://localhost:8080/portail/admin/recherche | PUT    | 204    | 102 B  | 14        |
+| http://localhost:8080/portail/                | PUT    | 200    | 269 B  | 7570      |
+| http://localhost:8080/portail/async           | PUT    | 200    | 269 B  | 7570      |
+| http://localhost:8080/portail/admin/recherche | PUT    | 204    | 102 B  | 17        |
+| http://localhost:8080/portail/                | PUT    | 200    | 269 B  | 1600      |
+| http://localhost:8080/portail/async           | PUT    | 200    | 269 B  | 16400     |
+| http://localhost:8080/portail/admin/recherche | PUT    | 204    | 102 B  | 18        |
+| http://localhost:8080/portail/                | PUT    | 200    | 269 B  | 241       |
+| http://localhost:8080/portail/async           | PUT    | 200    | 269 B  | 212       |
+| http://localhost:8080/portail/admin/recherche | PUT    | 204    | 102 B  | 266       |
+| http://localhost:8080/portail/                | PUT    | 200    | 269 B  | 200       |
+| http://localhost:8080/portail/async           | PUT    | 200    | 269 B  | 399       |
+| http://localhost:8080/portail/admin/recherche | PUT    | 204    | 102 B  | 10        |
+| http://localhost:8080/portail/                | PUT    | 200    | 269 B  | 170       |
+| http://localhost:8080/portail/async           | PUT    | 200    | 269 B  | 560       |
+| http://localhost:8080/portail/admin/recherche | PUT    | 204    | 102 B  | 200       |
+| http://localhost:8080/portail/                | PUT    | 200    | 269 B  | 1520      |
+| http://localhost:8080/portail/async           | PUT    | 200    | 269 B  | 1640      |
+| http://localhost:8080/portail/admin/recherche | PUT    | 204    | 102 B  | 11        |
+| http://localhost:8080/portail/                | PUT    | 200    | 269 B  | 1540      |
+| http://localhost:8080/portail/async           | PUT    | 200    | 269 B  | 1520      |
+| http://localhost:8080/portail/admin/recherche | PUT    | 204    | 102 B  | 31        |
+| http://localhost:8080/portail/                | PUT    | 200    | 269 B  | 1550      |
+| http://localhost:8080/portail/async           | PUT    | 200    | 269 B  | 1550      |
