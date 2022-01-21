@@ -8,7 +8,7 @@ Escoffier Vincent & Jallais Adrien
 
 ## Introduction
 
-Le but du TP est de proposer plusieurs implémentations des méthodes de recherche, en recourant au parallélisme et à la communication asynchrone, et de les comparer.
+The aim of the tutorial is to propose several implementations of the search methods, using parallelism and asynchronous communication, and to compare them.
 
 ## Description
 
